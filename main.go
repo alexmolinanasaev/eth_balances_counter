@@ -40,7 +40,7 @@ func main() {
 	wg := &sync.WaitGroup{}
 	mux := sync.RWMutex{}
 
-	ticker := time.Ticker{}
+	ticker := time.NewTicker(REQUESTS_DELAY)
 
 	startBlockNumber := latestBlockNumber - BLOCKS_STEP
 	for i := startBlockNumber; i <= latestBlockNumber; i++ {
