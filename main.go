@@ -71,12 +71,14 @@ func main() {
 
 				gasUsed := big.NewInt(0).SetUint64(receipt.GasUsed)
 
+				txFee := big.NewInt(0).Mul(gasUsed, tx.GasPrice())
+
 				mux.Lock()
 				fromBalance := big.NewInt(0)
 				if _, ok := balances[fromAddress]; ok {
 					fromBalance = balances[fromAddress]
 				}
-				fromBalance = big.NewInt(0).Sub(fromBalance, big.NewInt(0).Add(gasUsed, tx.Value()))
+				fromBalance = big.NewInt(0).Sub(fromBalance, big.NewInt(0).Add(txFee, tx.Value()))
 				balances[fromAddress] = fromBalance
 
 				to := tx.To()
